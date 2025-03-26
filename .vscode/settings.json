@@ -1,8 +1,23 @@
 {
     "cSpell.words": [
+        "bracex",
+        "clib",
+        "gcompute",
         "gmtime",
+        "jsonschema",
         "levelname",
+        "mypy",
+        "pathspec",
+        "pexpect",
+        "platformdirs",
+        "ptyprocess",
         "pycache",
-        "setuptools"
-    ]
+        "resolvelib",
+        "rpds",
+        "ruamel",
+        "setuptools",
+        "wcmatch",
+        "zipp"
+    ],
+    "ansible.python.interpreterPath": "/home/jkenny/find_job/github/gcp_compute/venv/bin/python"
 }

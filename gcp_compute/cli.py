@@ -1,6 +1,6 @@
 from argparse import REMAINDER
 
-from pkg_name.arg_parser import ArgParser
+from gcp_compute.arg_parser import ArgParser
 
 
 def parse_parent_args(args: dict):
@@ -9,8 +9,8 @@ def parse_parent_args(args: dict):
     return True
 
 
-def pkg_parent():
-    args = ArgParser('Pkg Commands', None, {
+def compute_parent():
+    args = ArgParser('GCP Compute Commands', None, {
         'placeholder': {
             'short': 'p',
             'help': 'placeholder',
