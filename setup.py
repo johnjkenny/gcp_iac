@@ -3,10 +3,10 @@ from setuptools import setup
 
 try:
     setup(
-        name='pkg-name',
+        name='gcp_compute',
         version='1.0.0',
         entry_points={'console_scripts': [
-            'pkg-name = pkg_name.cli:pkg_parent',
+            'gcompute = gcp_compute.cli:compute_parent',
         ]},
     )
     exit(0)
