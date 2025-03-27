@@ -1,12 +1,20 @@
 {
     "cSpell.words": [
+        "basearch",
         "bracex",
         "clib",
+        "containerd",
         "gcompute",
         "gmtime",
+        "gpgcheck",
+        "gpgkey",
+        "highcpu",
+        "highmem",
         "jsonschema",
+        "keygen",
         "levelname",
         "mypy",
+        "NOPASSWD",
         "pathspec",
         "pexpect",
         "platformdirs",
@@ -16,6 +24,7 @@
         "rpds",
         "ruamel",
         "setuptools",
+        "tfvars",
         "wcmatch",
         "zipp"
     ],

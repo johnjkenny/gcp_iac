@@ -7,6 +7,7 @@ try:
         version='1.0.0',
         entry_points={'console_scripts': [
             'gcompute = gcp_compute.cli:compute_parent',
+            'gcompute-init = gcp_compute.cli:compute_init',
         ]},
     )
     exit(0)
