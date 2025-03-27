@@ -174,3 +174,17 @@ cython_debug/
 .pypirc
 
 .ansible/
+gcp_compute/gcp_env/keys/*
+!gcp_compute/gcp_env/keys/__init__.py
+
+gcp_compute/ansible/clients/*
+!gcp_compute/ansible/clients/__init__.py
+
+gcp_compute/gcp_env/env.tfvars
+
+gcp_compute/bkp/
+
+gcp_compute/terraform/.terraform/
+gcp_compute/terraform/terraform.tfstate
+gcp_compute/terraform/terraform.tfstate.backup
+gcp_compute/terraform/.terraform.lock.hcl

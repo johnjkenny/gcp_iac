@@ -1,9 +1,0 @@
-- name: Configure GCP instance
-  hosts: all
-  become: true
-  tasks:
-    - name: Install nginx
-      ansible.builtin.apt:
-        name: nginx
-        state: present
-        update_cache: true

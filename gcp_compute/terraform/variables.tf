@@ -1,4 +1,4 @@
-variable "project" {
+variable "project_id" {
   type=string
   default=""
 }
@@ -13,42 +13,34 @@ variable "zone" {
   default="us-central1-a"
 }
 
-variable "credentials_file" {
+variable "instance_name_prefix" {
   type=string
-  default="service_account.json"
+  default="vm-"
 }
 
-variable "web_instance_prefix" {
-  type=string
-  default="web-"
-}
-
-variable "web_tags" {
+variable "instance_tags" {
   type=list(string)
   default=["web", "ssh"]
 }
 
-variable "machine_type" {
+variable "instance_machine_type" {
   type=string
-  default="e2-medium"
+  default="e2-highcpu-2"
 }
 
 variable "boot_image" {
   type=string
-  default="debian-cloud/debian-12"
+  default="rocky-linux-cloud/rocky-linux-9"
 }
 
-variable "boot_disk_size_gb" {
-  type=number
-  default=20
-}
-
-variable "ssh_user" {
+variable "ansible_ssh_pub_key_file" {
   type=string
+  description="Path to the Ansible SSH public key"
   default=""
 }
 
-variable "public_key_path" {
+variable "gcp_compute_sa_file" {
   type=string
-  default="~/.ssh/id_rsa.pub"
+  description="Path to the GCP service account file"
+  default=""
 }
