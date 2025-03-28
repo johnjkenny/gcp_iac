@@ -20,4 +20,5 @@ if [[ "$ID" =~ (rhel|rocky|centos|fedora|ol) ]]; then
   dnf install -y python3.12 python3-dnf || yum install -y python3.12 python3-dnf
 fi
 
+echo "done" > /var/log/startup-done.marker
 exit 0

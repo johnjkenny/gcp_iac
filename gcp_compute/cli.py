@@ -71,7 +71,10 @@ def compute_init(parent_args: list = None):
 
 
 def parse_run_args(args: dict):
-    return GCPCompute().apply_terraform()
+    if args.get('test'):
+        # GCPCompute().destroy_terraform()
+        return GCPCompute().apply_terraform()
+    return True
 
 
 def compute_run(parent_args: list = None):
@@ -80,6 +83,11 @@ def compute_run(parent_args: list = None):
             'short': 'F',
             'help': 'Force action',
             'action': 'store_true',
+        },
+        'test': {
+            'short': 't',
+            'help': 'Test run',
+            'action': 'store_true'
         }
     }).set_arguments()
     if not parse_run_args(args):

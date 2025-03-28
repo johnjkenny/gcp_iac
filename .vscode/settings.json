@@ -4,16 +4,21 @@
         "bracex",
         "clib",
         "containerd",
+        "fastcgi",
         "gcompute",
         "gmtime",
         "gpgcheck",
         "gpgkey",
         "highcpu",
         "highmem",
+        "initdb",
+        "jsonfile",
         "jsonschema",
         "keygen",
         "levelname",
         "mypy",
+        "mysqld",
+        "mysqli",
         "NOPASSWD",
         "pathspec",
         "pexpect",
@@ -28,5 +33,4 @@
         "wcmatch",
         "zipp"
     ],
-    "ansible.python.interpreterPath": "/home/jkenny/find_job/github/gcp_compute/venv/bin/python"
 }

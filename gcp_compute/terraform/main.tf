@@ -30,7 +30,7 @@ provider "google" {
 resource "random_id" "instance_suffix" {byte_length=4}
 
 resource "google_compute_instance" "vm_instance" {
-  name="${var.instance_name_prefix}${random_id.instance_suffix.hex}"
+  name="docker-01"
   machine_type=var.instance_machine_type
   zone=var.zone
   boot_disk {
