@@ -1,9 +1,9 @@
 from pathlib import Path
 
-from gcp_compute.compute import GCPCompute
+from gcp_iac.iac import GCPIaC
 
 
-class Init(GCPCompute):
+class Init(GCPIaC):
     def __init__(self, service_account: str, project_id: str, force: bool = False):
         super().__init__()
         self.service_account = service_account
@@ -61,5 +61,5 @@ class Init(GCPCompute):
                        self.__initialize_terraform]:
             if not method():
                 return False
-        self.log.info('Successfully initialized GCP-Compute')
+        self.log.info('Successfully initialized GCP-IaC')
         return True

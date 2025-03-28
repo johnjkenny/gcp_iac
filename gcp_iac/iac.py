@@ -6,10 +6,10 @@ from time import sleep
 import ansible_runner
 from python_terraform import Terraform
 
-from gcp_compute.utils import ComputeUtils
+from gcp_iac.utils import IaCUtils
 
 
-class GCPCompute(ComputeUtils):
+class GCPIaC(IaCUtils):
     def __init__(self, logger: Logger = None):
         super().__init__(logger)
         self.__tf: Terraform | None = None

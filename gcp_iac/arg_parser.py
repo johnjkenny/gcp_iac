@@ -1,6 +1,6 @@
 from argparse import ArgumentParser, HelpFormatter
 
-from gcp_compute.color import Color
+from gcp_iac.color import Color
 
 
 class CustomHelpFormatter(HelpFormatter):
