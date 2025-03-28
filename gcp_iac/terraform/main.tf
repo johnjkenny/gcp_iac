@@ -27,8 +27,6 @@ provider "google" {
   credentials=file(local.resolved_sa_file)
 }
 
-resource "random_id" "instance_suffix" {byte_length=4}
-
 resource "google_compute_instance" "vm_instance" {
   name="docker-01"
   machine_type=var.instance_machine_type

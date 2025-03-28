@@ -7,8 +7,10 @@ from gcp_iac.iac import GCPIaC
 def parse_parent_args(args: dict):
     if args.get('init'):
         return iac_init(args['init'])
-    if args.get('run'):
-        return iac_run(args['run'])
+    if args.get('apply'):
+        return GCPIaC().apply_terraform()
+    if args.get('destroy'):
+        return GCPIaC().destroy_terraform()
     return True
 
 
@@ -16,23 +18,18 @@ def iac_parent():
     args = ArgParser('GCP IaC Commands', None, {
         'init': {
             'short': 'I',
-            'help': 'Initialize GCP IaC Environment (giac-init)',
+            'help': 'Initialize GCP IaC Environment',
             'nargs': REMAINDER
         },
-        'configs': {
-            'short': 'c',
-            'help': 'Manage GCP IaC Deploy Configurations (giac-configs)',
-            'nargs': REMAINDER
-        },
-        'run': {
-            'short': 'r',
-            'help': 'Run GCP IaC Deploy Configurations (giac-run)',
-            'nargs': REMAINDER
+        'apply': {
+            'short': 'a',
+            'help': 'Apply GCP IaC Configuration',
+            'action': 'store_true',
         },
         'destroy': {
             'short': 'd',
-            'help': 'Destroy GCP IaC Systems (giac-destroy)',
-            'nargs': REMAINDER
+            'help': 'Destroy GCP IaC Configuration',
+            'action': 'store_true',
         },
     }).set_arguments()
     if not parse_parent_args(args):
@@ -66,29 +63,5 @@ def iac_init(parent_args: list = None):
         }
     }).set_arguments()
     if not parse_init_args(args):
-        exit(1)
-    exit(0)
-
-
-def parse_run_args(args: dict):
-    if args.get('test'):
-        return GCPIaC().apply_terraform()
-    return True
-
-
-def iac_run(parent_args: list = None):
-    args = ArgParser('GCP IaC Run', parent_args, {
-        'force': {
-            'short': 'F',
-            'help': 'Force action',
-            'action': 'store_true',
-        },
-        'test': {
-            'short': 't',
-            'help': 'Test run',
-            'action': 'store_true'
-        }
-    }).set_arguments()
-    if not parse_run_args(args):
         exit(1)
     exit(0)

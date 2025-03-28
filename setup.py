@@ -7,7 +7,6 @@ try:
         version='1.0.0',
         entry_points={'console_scripts': [
             'giac = gcp_iac.cli:iac_parent',
-            'giac-init = gcp_iac.cli:iac_init',
         ]},
     )
     exit(0)

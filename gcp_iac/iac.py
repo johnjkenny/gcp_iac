@@ -2,6 +2,7 @@ import socket
 from pathlib import Path
 from logging import Logger
 from time import sleep
+from json import loads
 
 import ansible_runner
 from python_terraform import Terraform
@@ -65,9 +66,74 @@ class GCPIaC(IaCUtils):
         self.display_failed('Failed to determine if port is open')
         return False
 
-    def apply_terraform(self):
-        self.display_successful('Applying Terraform')
+    def __cleanup_ansible_client_dir(self, client_name: str):
+        path = Path(self.ansible_dir + f'/clients/{client_name}')
+        if path.exists():
+            if self.run_cmd(f'rm -rf {path}')[1]:
+                self.display_successful(f'Cleaned up ansible client directory: {client_name}')
+            else:
+                return False
+        return True
+
+    def __plan_tf_destroy(self) -> dict:
         try:
+            rsp = self.tf.plan(var_file=self.env_vars_file, destroy=True, out='tfplan')
+            if rsp[2]:
+                self.display_failed(f'Failed to plan Terraform destroy: {rsp[2]}')
+                return {}
+        except Exception:
+            self.log.exception('Failed to plan Terraform destroy')
+            return {}
+        return self.__get_tf_plan_data()
+
+    def __get_tf_plan_data(self) -> dict:
+        try:
+            return_code, plan_json, stderr = self.tf.show('tfplan', json=True)
+            if return_code != 0:
+                self.display_failed(f'Failed to get Terraform plan data: {stderr}')
+                return {}
+            return loads(plan_json)
+        except Exception:
+            self.log.exception('Failed to get Terraform plan data')
+            return {}
+
+    def __destroy_tf(self):
+        try:
+            rsp = self.tf.cmd('destroy', f'-var-file={self.env_vars_file}', '-auto-approve')
+            if rsp[0] != 0:
+                self.display_failed(f'Failed to destroy Terraform: {rsp[2]}')
+                return False
+            return True
+        except Exception:
+            self.log.exception('Failed to destroy Terraform')
+            return False
+
+    def __display_tf_destroy_changes(self, plan: dict):
+        payload = 'Successfully destroyed Terraform State\n'
+        for change in plan.get('resource_changes', []):
+            change = change.get('change', {})
+            if change.get('actions', []) == ['delete']:
+                name = change.get('before', {}).get('name', '')
+                if name:
+                    if not self.__cleanup_ansible_client_dir(name):
+                        return False
+                    payload += f"  Removed Instance: {name}\n"
+        self.display_successful(payload)
+
+    def destroy_terraform(self):
+        self.display_successful('Destroying Terraform State')
+        plan = self.__plan_tf_destroy()
+        if not plan:
+            return False
+        if not self.__destroy_tf():
+            return False
+        self.__display_tf_destroy_changes(plan)
+        return True
+
+    def apply_terraform(self):
+        self.display_successful('Applying Terraform State')
+        try:
+            self.tf.destroy()
             return_code, _, stderr = self.tf.apply(var_file=self.env_vars_file, skip_plan=True, auto_approve=True)
             if return_code != 0:
                 self.display_failed(f'Failed to apply Terraform: {stderr}')
@@ -75,7 +141,7 @@ class GCPIaC(IaCUtils):
             outputs = self.tf.output()
             ip = outputs["instance_ip"]["value"]
             name = outputs["instance_name"]["value"]
-            self.display_successful(f'Successfully applied Terraform\nName: {name}, IP: {ip}')
+            self.display_successful(f'Successfully applied Terraform State\n  Name: {name}, IP: {ip}')
         except Exception:
             self.log.exception('Failed to apply Terraform')
             return False
@@ -94,7 +160,6 @@ class GCPIaC(IaCUtils):
             artifact_dir=f'{client_dir}/artifacts',
             envvars=self.__create_ansible_env_vars())
         if result.rc == 0:
-            self.display_successful('Successfully configured system with ansible')
             return True
         self.log.error(f'Failed to run Ansible playbook: {result.status}')
         return False

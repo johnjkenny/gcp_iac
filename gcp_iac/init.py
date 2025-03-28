@@ -61,5 +61,5 @@ class Init(GCPIaC):
                        self.__initialize_terraform]:
             if not method():
                 return False
-        self.log.info('Successfully initialized GCP-IaC')
+        self.log.info('Successfully initialized GCP-IaC Environment')
         return True
