@@ -85,4 +85,5 @@
     - name: Bring up containers using Docker Compose
       community.docker.docker_compose_v2:
         project_src: "{{ app_dir }}"
+        build: always
         state: present

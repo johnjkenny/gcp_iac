@@ -182,9 +182,8 @@ gcp_iac/ansible/clients/*
 
 gcp_iac/gcp_env/env.tfvars
 
-gcp_iac/bkp/
-
 gcp_iac/terraform/.terraform/
 terraform.tfstate
 gcp_iac/terraform/terraform.tfstate.backup
+gcp_iac/terraform/tfplan
 gcp_iac/terraform/.terraform.lock.hcl
