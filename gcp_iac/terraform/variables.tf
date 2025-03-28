@@ -13,11 +13,6 @@ variable "zone" {
   default="us-central1-a"
 }
 
-variable "instance_name_prefix" {
-  type=string
-  default="vm-"
-}
-
 variable "instance_tags" {
   type=list(string)
   default=["web", "ssh"]
@@ -39,7 +34,7 @@ variable "ansible_ssh_pub_key_file" {
   default=""
 }
 
-variable "gcp_compute_sa_file" {
+variable "gcp_iac_sa_file" {
   type=string
   description="Path to the GCP service account file"
   default=""

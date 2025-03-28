@@ -1,37 +1,37 @@
 from argparse import REMAINDER
 
-from gcp_compute.arg_parser import ArgParser
-from gcp_compute.compute import GCPCompute
+from gcp_iac.arg_parser import ArgParser
+from gcp_iac.iac import GCPIaC
 
 
 def parse_parent_args(args: dict):
     if args.get('init'):
-        return compute_init(args['init'])
+        return iac_init(args['init'])
     if args.get('run'):
-        return compute_run(args['run'])
+        return iac_run(args['run'])
     return True
 
 
-def compute_parent():
-    args = ArgParser('GCP Compute Commands', None, {
+def iac_parent():
+    args = ArgParser('GCP IaC Commands', None, {
         'init': {
             'short': 'I',
-            'help': 'Initialize GCP Compute Environment (gcompute-init)',
+            'help': 'Initialize GCP IaC Environment (giac-init)',
             'nargs': REMAINDER
         },
         'configs': {
             'short': 'c',
-            'help': 'Manage GCP Compute Deploy Configurations (gcompute-configs)',
+            'help': 'Manage GCP IaC Deploy Configurations (giac-configs)',
             'nargs': REMAINDER
         },
         'run': {
             'short': 'r',
-            'help': 'Run GCP Compute Deploy Configurations (gcompute-run)',
+            'help': 'Run GCP IaC Deploy Configurations (giac-run)',
             'nargs': REMAINDER
         },
         'destroy': {
             'short': 'd',
-            'help': 'Destroy GCP Compute Systems (gcompute-destroy)',
+            'help': 'Destroy GCP IaC Systems (giac-destroy)',
             'nargs': REMAINDER
         },
     }).set_arguments()
@@ -42,13 +42,13 @@ def compute_parent():
 
 def parse_init_args(args: dict):
     if args.get('serviceAccount') and args.get('project'):
-        from gcp_compute.init import Init
+        from gcp_iac.init import Init
         return Init(args['serviceAccount'], args['project'], args['force'])._run()
     return True
 
 
-def compute_init(parent_args: list = None):
-    args = ArgParser('GCP Compute Initialization', parent_args, {
+def iac_init(parent_args: list = None):
+    args = ArgParser('GCP IaC Initialization', parent_args, {
         'serviceAccount': {
             'short': 'sa',
             'help': 'Service account path (full path to json file)',
@@ -72,13 +72,12 @@ def compute_init(parent_args: list = None):
 
 def parse_run_args(args: dict):
     if args.get('test'):
-        # GCPCompute().destroy_terraform()
-        return GCPCompute().apply_terraform()
+        return GCPIaC().apply_terraform()
     return True
 
 
-def compute_run(parent_args: list = None):
-    args = ArgParser('GCP Compute Run', parent_args, {
+def iac_run(parent_args: list = None):
+    args = ArgParser('GCP IaC Run', parent_args, {
         'force': {
             'short': 'F',
             'help': 'Force action',

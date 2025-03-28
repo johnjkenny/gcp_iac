@@ -1,13 +1,13 @@
 from logging import Logger
 from subprocess import run
 
-from gcp_compute.logger import get_logger
-from gcp_compute.color import Color
+from gcp_iac.logger import get_logger
+from gcp_iac.color import Color
 
 
-class ComputeUtils():
+class IaCUtils():
     def __init__(self, logger: Logger = None):
-        self.log = logger or get_logger('gcp-compute')
+        self.log = logger or get_logger('gcp-iac')
 
     @staticmethod
     def display_successful(msg: str) -> None:

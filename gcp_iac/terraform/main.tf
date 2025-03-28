@@ -9,8 +9,8 @@ terraform {
 
 locals {
   resolved_sa_file = (
-    var.gcp_compute_sa_file != "" ?
-    var.gcp_compute_sa_file: "${path.module}/../gcp_env/keys/.sa.json"
+    var.gcp_iac_sa_file != "" ?
+    var.gcp_iac_sa_file: "${path.module}/../gcp_env/keys/.sa.json"
   )
 }
 

@@ -3,11 +3,11 @@ from setuptools import setup
 
 try:
     setup(
-        name='gcp_compute',
+        name='gcp_iac',
         version='1.0.0',
         entry_points={'console_scripts': [
-            'gcompute = gcp_compute.cli:compute_parent',
-            'gcompute-init = gcp_compute.cli:compute_init',
+            'giac = gcp_iac.cli:iac_parent',
+            'giac-init = gcp_iac.cli:iac_init',
         ]},
     )
     exit(0)
