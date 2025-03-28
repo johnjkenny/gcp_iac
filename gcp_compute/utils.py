@@ -27,6 +27,15 @@ class ComputeUtils():
         """
         Color().print_message(msg, 'red')
 
+    @staticmethod
+    def display_warning(msg: str) -> None:
+        """Display a warning message to console in yellow
+
+        Args:
+            msg (str): Message to display
+        """
+        Color().print_message(msg, 'yellow')
+
     def run_cmd(self, cmd: str, ignore_error: bool = False, log_output: bool = False) -> tuple:
         """Run a command and return the output
 

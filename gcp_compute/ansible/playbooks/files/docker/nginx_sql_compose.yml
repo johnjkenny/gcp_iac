@@ -1,0 +1,27 @@
+services:
+  app1_web:
+    build: /opt/app1/web_data
+    env_file:
+      - /opt/app1/.env
+    image: app1_web
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - app1_db
+    networks:
+      - app1_backend
+
+  app1_db:
+    build: /opt/app1/db_data
+    image: app1_db
+    env_file:
+      - /opt/app1/.env
+    restart: always
+    volumes:
+      - /opt/app1/db_data/db:/var/lib/mysql
+    networks:
+      - app1_backend
+
+networks:
+  app1_backend:

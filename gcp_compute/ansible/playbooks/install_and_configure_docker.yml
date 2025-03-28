@@ -2,15 +2,11 @@
 - name: Install and configure Docker
   hosts: all
   become: true
+  gather_facts: true
   vars:
     docker_users:
       - ansible
   tasks:
-    - name: Gather OS distribution info
-      ansible.builtin.setup:
-        gather_subset:
-          - "!all"
-          - "min"
 
     - name: Install dependencies (APT)
       ansible.builtin.apt:
@@ -24,27 +20,21 @@
         update_cache: true
       when: ansible_facts['os_family'] == 'Debian'
 
-    - name: Add Docker GPG key (APT)
-      ansible.builtin.apt_key:
-        url: https://download.docker.com/linux/{{ ansible_facts['distribution'] | lower }}/gpg
-        state: present
-      when: ansible_facts['os_family'] == 'Debian'
-
     - name: Set up Docker repo on Debian-family systems
+      when: ansible_facts['os_family'] == 'Debian'
       block:
-        - name: Add Docker GPG key
+        - name: Add Docker GPG key (APT)
           ansible.builtin.apt_key:
             url: https://download.docker.com/linux/{{ ansible_facts['distribution'] | lower }}/gpg
             state: present
 
-        - name: Add Docker APT repo
+        - name: Add Docker repo (APT)
           ansible.builtin.apt_repository:
             repo: >
               deb [arch=amd64]
               https://download.docker.com/linux/{{ ansible_facts['distribution'] | lower }}
               {{ ansible_facts['distribution_release'] }} stable
             state: present
-          when: ansible_facts['os_family'] == 'Debian'
 
     - name: Install dependencies (YUM/DNF)
       ansible.builtin.package:

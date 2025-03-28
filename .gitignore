@@ -185,6 +185,6 @@ gcp_compute/gcp_env/env.tfvars
 gcp_compute/bkp/
 
 gcp_compute/terraform/.terraform/
-gcp_compute/terraform/terraform.tfstate
+terraform.tfstate
 gcp_compute/terraform/terraform.tfstate.backup
 gcp_compute/terraform/.terraform.lock.hcl
