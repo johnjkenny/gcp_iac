@@ -16,6 +16,7 @@
           - curl
           - gnupg
           - lsb-release
+          - rsync
         state: present
         update_cache: true
       when: ansible_facts['os_family'] == 'Debian'
@@ -42,6 +43,7 @@
           - yum-utils
           - device-mapper-persistent-data
           - lvm2
+          - rsync
         state: present
       when: ansible_facts['os_family'] == 'RedHat'
 
