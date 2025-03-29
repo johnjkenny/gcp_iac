@@ -4,4 +4,4 @@
 - name: Install and configure Docker
   import_playbook: ./install_and_configure_docker.yml
 - name: Deploy NGINX and SQL Compose
-  import_playbook: ./deploy_nginx_sql_compose.yml
+  import_playbook: ./deploy_app1.yml
