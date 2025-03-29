@@ -39,7 +39,7 @@ def iac_parent():
 
 def parse_init_args(args: dict):
     if args.get('serviceAccount') and args.get('project'):
-        from gcp_iac.init import Init
+        from gcp_iac.iac import Init
         return Init(args['serviceAccount'], args['project'], args['force'])._run()
     return True
 
